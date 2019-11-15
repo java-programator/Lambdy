@@ -1,5 +1,6 @@
 package pl.altkom.zad02;
 
+import java.util.Random;
 import java.util.function.IntSupplier;
 
 /*
@@ -9,7 +10,9 @@ import java.util.function.IntSupplier;
 
 public class Randoms {
     public static void main(String[] args) {
-        IntSupplier randomGenerator = null;
+        Random random = new Random();
+        IntSupplier randomGenerator = () -> random.nextInt(14)+35;
+
         System.out.println(randomGenerator.getAsInt());
         System.out.println(randomGenerator.getAsInt());
         System.out.println(randomGenerator.getAsInt());

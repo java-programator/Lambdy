@@ -1,6 +1,7 @@
 package pl.altkom.zad01;
 
 import java.util.function.IntSupplier;
+import java.util.function.Predicate;
 
 /*
     Stwórz obiekt klasy IntSupplier, który będzie generował kolejne liczby pierwsze
@@ -20,8 +21,28 @@ import java.util.function.IntSupplier;
  */
 
 public class Primes {
+    static int i = 2;
     public static void main(String[] args) {
-        IntSupplier primesGenerator = null;
+
+        Predicate<Integer> primeChecker = x -> {
+            for (int i = 2; i <= Math.sqrt(x); i++) {
+                if (x % i == 0) {
+                    return false;
+                }
+            }
+            return true;
+        };
+
+        IntSupplier primesGenerator = () -> {
+            while(true) {
+                if (primeChecker.test(i)) {
+                    i++;
+                    return i - 1;
+                } else {
+                    i++;
+                }
+            }
+        };
         System.out.println(primesGenerator.getAsInt());
         System.out.println(primesGenerator.getAsInt());
         System.out.println(primesGenerator.getAsInt());
@@ -31,5 +52,6 @@ public class Primes {
         System.out.println(primesGenerator.getAsInt());
         System.out.println(primesGenerator.getAsInt());
         System.out.println(primesGenerator.getAsInt());
+
     }
 }

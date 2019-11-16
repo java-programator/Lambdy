@@ -14,6 +14,7 @@ public class Exercise08 {
         for(int i = 0; i < 10 ; i++){
             f2 = f2.andThen(po1roku);
         }
+
         System.out.println(f2.applyAsDouble(10000));
     }
 

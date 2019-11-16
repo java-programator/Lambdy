@@ -68,4 +68,9 @@ public class Writer {
         result.add(new Writer("Charlotte Link", Nationality.GERMAN, Gender.FEMALE, 5.5));
         return result;
     }
+
+
+
+
+
 }

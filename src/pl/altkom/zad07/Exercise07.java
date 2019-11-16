@@ -1,65 +1,50 @@
 package pl.altkom.zad07;
 
-import org.w3c.dom.ls.LSOutput;
+/*
+Napisz funkcję, który policzy sumę liczb Fibonacciego mniejszych od 100.
+
+Dodaj do programu, aby liczył sumę ich kwadratów
+Dodaj do programu, aby liczył sumę ich sześcianów
+
+Popraw program, aby liczył sumę liczb pierwszych mniejszych od 100
+ */
 
 import java.util.function.Function;
 import java.util.function.IntFunction;
-import java.util.function.IntPredicate;
-import java.util.function.UnaryOperator;
+import java.util.function.IntSupplier;
 
 public class Exercise07 {
 
-    private static int getFibonacci(int n)
-    {
-        if (n==0)
-        {
-            return 0;
+    private static IntSupplier fibonacciGenerator = new IntSupplier() {
+        int a = 0;
+        int b = 1;
+        @Override
+        public int getAsInt() {
+            int c = a + b;
+            b = a;
+            a = c;
+            return c;
         }
-        else if (n == 1)
-        {
-            return 1;
-        }
-        else
-            {
-            return getFibonacci(n-1) + getFibonacci(n-2);
-        }
-    }
-
-    public static int fibSum(IntFunction<Double> f){
-        int suma = 0;
-        for (int i =0; getFibonacci(i) < 100; i++){
-            suma += f.apply(getFibonacci(i));
-        }
-        return suma;
-    }
-
-    private static IntPredicate isPrime = n -> {
-        if (n <= 1) return false;
-        for (int i = 2; i*i <= n; i++)
-        {
-            if (n % i == 0) return false;
-        }
-        return true;
     };
 
-    public static int primeSum(IntFunction<Integer> f){
-        int suma = 0;
-        for (int i = 0; i < 100; i++){
-            if (isPrime.test(i)){
-                suma += i;
-            };
-        }
-        return suma;
+    private static int fibonacci(int n) {
+        if (n<=1) return n;
+        else return fibonacci(n-1) + fibonacci(n-2);
     }
 
-
+    public static int countSum(IntSupplier generator, IntFunction<Double> f) {
+        int sum = 0;
+        for (int i = 0; fibonacci(i) <= 100; i++) {
+            System.out.println(fibonacci(i));
+            sum += f.apply(fibonacci(i));
+        }
+        return sum;
+    }
 
     public static void main(String[] args) {
-        System.out.println(primeSum(x -> x));
-
+        System.out.println(countSum(x -> (double)x));
+        System.out.println(countSum(x -> (double)x*x));
+        System.out.println(countSum(x -> (double)x*x*x));
+        System.out.println(countSum(Math::sqrt));
     }
-
-
-
-
 }

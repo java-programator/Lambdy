@@ -11,6 +11,7 @@ Popraw program, aby liczył sumę liczb pierwszych mniejszych od 100
 
 import java.util.function.Function;
 import java.util.function.IntFunction;
+import java.util.function.IntPredicate;
 import java.util.function.IntSupplier;
 
 public class Exercise07 {
@@ -26,6 +27,28 @@ public class Exercise07 {
                 b = a;
                 a = c;
                 return c;
+            }
+        };
+    }
+
+    static IntPredicate isPrime = n -> {
+        if (n <= 1) return false;
+        for (int i = 2; i*i <= n; i++)
+        {
+            if (n % i == 0) return false;
+        }
+        return true;
+    };
+
+    private static IntSupplier createPrimesGenerator() {
+        return new IntSupplier() {
+            int a=1;
+            @Override
+            public int getAsInt() {
+                do {
+                    a++;
+                } while (!isPrime.test(a));
+                return a;
             }
         };
     }
@@ -47,9 +70,9 @@ public class Exercise07 {
     }
 
     public static void main(String[] args) {
-        System.out.println(countSum(createFibonacciGenerator(), x -> (double)x));
-        System.out.println(countSum(createFibonacciGenerator(), x -> (double)x*x));
-        System.out.println(countSum(createFibonacciGenerator(), x -> (double)x*x*x));
-        System.out.println(countSum(createFibonacciGenerator(), Math::sqrt));
+        System.out.println(countSum(createPrimesGenerator(), x -> (double)x));
+        System.out.println(countSum(createPrimesGenerator(), x -> (double)x*x));
+        System.out.println(countSum(createPrimesGenerator(), x -> (double)x*x*x));
+        System.out.println(countSum(createPrimesGenerator(), Math::sqrt));
     }
 }

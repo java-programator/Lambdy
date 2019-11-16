@@ -9,6 +9,9 @@ Dodaj do programu, aby liczył sumę ich sześcianów
 Popraw program, aby liczył sumę liczb pierwszych mniejszych od 100
  */
 
+import java.util.function.Function;
+import java.util.function.IntFunction;
+
 public class Exercise07 {
 
     private static int fibonacci(int n) {
@@ -16,16 +19,19 @@ public class Exercise07 {
         else return fibonacci(n-1) + fibonacci(n-2);
     }
 
-    public static int countSum() {
+    public static int countSum(IntFunction<Double> f) {
         int sum = 0;
         for (int i = 0; fibonacci(i) <= 100; i++) {
             System.out.println(fibonacci(i));
-            sum += fibonacci(i);
+            sum += f.apply(fibonacci(i));
         }
         return sum;
     }
 
     public static void main(String[] args) {
-        System.out.println(countSum());
+        System.out.println(countSum(x -> (double)x));
+        System.out.println(countSum(x -> (double)x*x));
+        System.out.println(countSum(x -> (double)x*x*x));
+        System.out.println(countSum(Math::sqrt));
     }
 }

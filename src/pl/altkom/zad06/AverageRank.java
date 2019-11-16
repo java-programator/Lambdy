@@ -3,6 +3,7 @@ package pl.altkom.zad06;
 import pl.altkom.Writer;
 
 import java.util.List;
+import java.util.function.Function;
 
 /*
 Popraw poniższy program, aby wypisał średnią (arytmetyczną) ocen wszystkich pisarzy (kobiet i mężczyzn)
@@ -11,7 +12,14 @@ Popraw poniższy program, aby wypisał średnią (arytmetyczną) ocen wszystkich
 public class AverageRank {
 
     public static double getAverageRank(List<Writer> writers) {
-        return 0.0;
+        Function<List<Writer>, Double> average = x ->{
+            double sum = 0;
+            for(Writer i : x){
+                sum+=i.getRank();
+            }
+            return sum/x.size();
+        };
+        return average.apply(writers);
     }
 
     public static void main(String[] args) {

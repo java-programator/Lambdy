@@ -15,17 +15,21 @@ import java.util.function.IntSupplier;
 
 public class Exercise07 {
 
-    private static IntSupplier fibonacciGenerator = new IntSupplier() {
-        int a = 0;
-        int b = 1;
-        @Override
-        public int getAsInt() {
-            int c = a + b;
-            b = a;
-            a = c;
-            return c;
-        }
-    };
+    private static IntSupplier createFibonacciGenerator() {
+        return new IntSupplier() {
+            int a = 0;
+            int b = 1;
+
+            @Override
+            public int getAsInt() {
+                int c = a + b;
+                b = a;
+                a = c;
+                return c;
+            }
+        };
+    }
+
 
     private static int fibonacci(int n) {
         if (n<=1) return n;
@@ -34,17 +38,18 @@ public class Exercise07 {
 
     public static int countSum(IntSupplier generator, IntFunction<Double> f) {
         int sum = 0;
-        for (int i = 0; fibonacci(i) <= 100; i++) {
-            System.out.println(fibonacci(i));
-            sum += f.apply(fibonacci(i));
+        int temp = 0;
+        while ((temp = generator.getAsInt()) <= 100) {
+            System.out.println(temp);
+            sum += f.apply(temp);
         }
         return sum;
     }
 
     public static void main(String[] args) {
-        System.out.println(countSum(x -> (double)x));
-        System.out.println(countSum(x -> (double)x*x));
-        System.out.println(countSum(x -> (double)x*x*x));
-        System.out.println(countSum(Math::sqrt));
+        System.out.println(countSum(createFibonacciGenerator(), x -> (double)x));
+        System.out.println(countSum(createFibonacciGenerator(), x -> (double)x*x));
+        System.out.println(countSum(createFibonacciGenerator(), x -> (double)x*x*x));
+        System.out.println(countSum(createFibonacciGenerator(), Math::sqrt));
     }
 }
